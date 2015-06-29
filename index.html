@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+	<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Trading Hours</title>
+    <link rel="stylesheet" type="text/css" href="site/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="site/css/bootstrap-theme.min.css">
+		<link rel="stylesheet" type="text/css" href="site/css/main.css">
+    <script type="text/javascript" src="site/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="site/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="data/exchanges.js"></script>
+		<script type="text/javascript" src="site/js/main.js"></script>
+	</head>
+	<body>
+		<div class="container">
+      <div class="row">
+        <div class="col-xs-8">
+          <div class="page-header">
+            <h1>Trading Hours</h1>
+            <p class="lead">Sessions reference page for markets all across the world</p>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <div class="current-time">14:00<small>:32</small></div>
+          <div class="current-time-marker-top"></div>
+        </div>
+      </div>
+
+      <div class="row exchange-row">
+        <div class="col-xs-8">
+          <div class="actions-panel">
+            <span class="glyphicon glyphicon-star highlighted-action"></span>
+          </div>
+          <span class="exchange-name">New York Stock Exchange</span>
+          <span class="text-muted">&#9679;&nbsp;Out Of Session</span>
+        </div>
+        <div class="col-xs-4">
+          <div class="progress timeline">
+            <div class="progress-bar" style="width: 0;margin-left:5%;"></div>
+            <div class="progress-bar progress-bar-warning" style="width: 10%"></div>
+            <div class="progress-bar progress-bar-success" style="width: 45%;"></div>
+            <div class="progress-bar progress-bar-warning" style="width: 10%"></div>
+          </div>
+          <div class="current-time-marker">
+          </div>
+        </div>
+      </div>
+
+      <div class="row exchange-row">
+        <div class="col-xs-8">
+          <div class="actions-panel">
+            <span class="glyphicon glyphicon-star highlighted-action"></span>
+          </div>
+          <span class="exchange-name">NASDAQ</span>
+          <span class="text-success">&#9679;&nbsp;In Session</span>
+        </div>
+        <div class="col-xs-4">
+          <div class="progress timeline">
+            <div class="progress-bar progress-bar-success" style="width: 35%;"></div>
+            <div class="progress-bar progress-bar-warning" style="width: 10%"></div>
+          </div>
+          <div class="current-time-marker">
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      <div class="container">
+        Made by Andrew Lanin &lt;&nbsp;<em>ndrewln@gmail.com</em>&nbsp;&gt; &#9679;&nbsp<a href="#">Source code</a> &#9679;&nbsp<a href="#">Report data issue</a>
+      </div>
+    </footer>
+	</body>
+</html>
