@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="TradingHours">
 	<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,10 +10,13 @@
 		<link rel="stylesheet" type="text/css" href="site/css/main.css">
     <script type="text/javascript" src="site/js/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="site/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="site/js/moment.min.js"></script>
+    <script type="text/javascript" src="site/js/moment-timezone-with-data.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
     <script type="text/javascript" src="data/exchanges.js"></script>
 		<script type="text/javascript" src="site/js/main.js"></script>
 	</head>
-	<body>
+	<body ng-controller="ExchangeListController">
 		<div class="container">
       <div class="row">
         <div class="col-xs-8">
@@ -23,17 +26,17 @@
           </div>
         </div>
         <div class="col-xs-4">
-          <div class="current-time">14:00<small>:32</small></div>
+          <div class="current-time">{{now}}<small>:{{now_sec}}</small></div>
           <div class="current-time-marker-top"></div>
         </div>
       </div>
 
-      <div class="row exchange-row">
+      <div class="row exchange-row" ng-repeat="exchange in exchanges">
         <div class="col-xs-8">
           <div class="actions-panel">
             <span class="glyphicon glyphicon-star highlighted-action"></span>
           </div>
-          <span class="exchange-name">New York Stock Exchange</span>
+          <span class="exchange-name">{{exchange.full_name}}</span>
           <span class="text-muted">&#9679;&nbsp;Out Of Session</span>
         </div>
         <div class="col-xs-4">
@@ -48,6 +51,7 @@
         </div>
       </div>
 
+      <!--
       <div class="row exchange-row">
         <div class="col-xs-8">
           <div class="actions-panel">
@@ -65,6 +69,7 @@
           </div>
         </div>
       </div>
+      -->
 
     </div>
 
