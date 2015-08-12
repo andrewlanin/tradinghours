@@ -13,8 +13,7 @@ module.controller("ExchangeListController", [
 	
 	$scope.exchanges = _.map(exchanges(), function(exchange){
 		exchange._tradingWeek = $data_engine.tradingWeek(exchange.trading_hours);
-		exchange._timeline = $data_engine.timeline(exchange._tradingWeek, moment.utc());
-		console.log(exchange.short_name, exchange._timeline);
+		exchange._timeline = $data_engine.timeline(exchange._tradingWeek, moment.tz(exchange.timezone));
 		return exchange;
 	});
 }])

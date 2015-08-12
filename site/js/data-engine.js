@@ -114,22 +114,32 @@ module.factory("$data_engine", function() {
 		timeline: function(tradingWeek, now) {
 			var days = [
 				tradingWeek.tradingDay(now.clone().subtract(1, "days")),
-				tradingWeek.tradingDay(now)
+				tradingWeek.tradingDay(now.clone()),
+				tradingWeek.tradingDay(now.clone().add(1, "days"))
 			];
 
 			var scale = 86400;
 			var marginLeft = 25920;
 
-			days[0].startFrom = 86400 - marginLeft;
+			var startDay = 0;
+
+			var secondOfTheDay = now.hour() * 3600 + now.minute() * 60 + now.second();
+			if (secondOfTheDay >= marginLeft) {
+				startDay = 1;
+				days[startDay].startFrom = secondOfTheDay - marginLeft;
+			} else {
+				startDay = 0
+				days[startDay].startFrom = 86400 - (marginLeft - secondOfTheDay);
+			}
 
 			var result = [];
-			for (var i = 0; i < days.length; i++) {
+			for (var i = startDay; i < days.length; i++) {
 				var day = days[i];
 				var t = day.startFrom || 0;
 				while (t < 86400) {
 					var frame = day.frame(t);
 					result.push({
-						percent: (frame.end - frame.start) / scale * 100,
+						percent: (frame.end - t) / scale * 100,
 						type: frame.type
 					});
 					t = frame.end;
