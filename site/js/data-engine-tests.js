@@ -7,7 +7,102 @@ describe("Trading Hours data engine", function (argument) {
 		engine = _$data_engine_;
 	}));
 
-	it("displays correct magic", function() {
-		expect(engine.magic()).toBe(4);
-	})
+	it("can handle simplest session spec", function() {
+		var spec = [
+			{
+				"days": "Mon-Wed,Fri",
+				"start": "08:00",
+				"end": "16:00",
+				"type": "regular"
+			}
+		];
+		var expected = [
+			{
+				"start": 28800,
+				"end": 57600,
+				"type": "regular"
+			}
+		];
+		var week = engine.tradingWeek(spec);
+		expect(week.weekdays).toEqual([[], expected, expected, expected, [], expected, []]);
+	});
+
+	it("can handle sessions with multiple frames", function() {
+		var spec = [
+			{
+				"days": "Mon-Wed,Fri",
+				"start": "08:00",
+				"end": "16:00",
+				"type": "regular"
+			},
+			{
+				"days": "Mon-Wed,Fri",
+				"start": "07:00",
+				"end": "08:00",
+				"type": "premarket"
+			}
+		];
+		var expected = [
+			{
+				"start": 25200,
+				"end": 28800,
+				"type": "premarket"
+			},
+			{
+				"start": 28800,
+				"end": 57600,
+				"type": "regular"
+			}
+		];
+		var week = engine.tradingWeek(spec);
+		expect(week.weekdays).toEqual([[], expected, expected, expected, [], expected, []]);
+	});
+
+	it("can handle different sessions for different weekdays", function() {
+		var spec = [
+			{
+				"days": "Mon-Fri",
+				"start": "08:00",
+				"end": "16:00",
+				"type": "regular"
+			},
+			{
+				"days": "Mon-Wed",
+				"start": "07:00",
+				"end": "08:00",
+				"type": "premarket"
+			},
+			{
+				"days": "Sat-Tue",
+				"start": "18:00",
+				"end": "20:00",
+				"type": "evening"
+			}
+		];
+		var compiledRegular = {
+			"start": 28800,
+			"end": 57600,
+			"type": "regular"	
+		};
+		var compiledPremarket = {
+			"start": 25200,
+			"end": 28800,
+			"type": "premarket"
+		};
+		var compiledEvening = {
+			"start": 64800,
+			"end": 72000,
+			"type": "evening"
+		}
+		var week = engine.tradingWeek(spec);
+		expect(week.weekdays).toEqual([
+			[compiledEvening],
+			[compiledPremarket,compiledRegular,compiledEvening],
+			[compiledPremarket,compiledRegular,compiledEvening],
+			[compiledPremarket,compiledRegular],
+			[compiledRegular],
+			[compiledRegular],
+			[compiledEvening]	
+		]);
+	});
 })

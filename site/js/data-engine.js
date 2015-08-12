@@ -28,7 +28,7 @@ TradingDay.prototype.frameForTime = function(time) {
 
 	return {
 		start: secondOfTheDay,
-		end: 86401,
+		end: 86400,
 		type: "out"
 	}
 }
@@ -45,16 +45,18 @@ var TradingWeek = function(sessionSpec) {
 			if (isRange) {
 				var rangeParts = part.split("-");
 				assert(rangeParts.length == 2, "Incorrect weekday range: " + part);
-				var rangeBegin = weekdaysNames.indexOf(part[0]);
-				assert(rangeBegin != -1, "Incorrect weekday: " + part[0]);
-				var rangeEnd = weekdaysNames.indexOf(part[1]);
-				assert(rangeEnd != -1, "Incorrect weekday: " + part[1]);
-				for (var i=rangeBegin; i!=rangeEnd; i++) {
-					if (i >= weekdaysNames.length) {
+				var rangeBegin = weekdaysNames.indexOf(rangeParts[0]);
+				assert(rangeBegin != -1, "Incorrect weekday: " + rangeParts[0]);
+				var rangeEnd = weekdaysNames.indexOf(rangeParts[1]);
+				assert(rangeEnd != -1, "Incorrect weekday: " + rangeParts[1]);
+				var i = rangeBegin;
+				while (i != rangeEnd) {
+					result.push(i);
+					if (++i >= weekdaysNames.length) {
 						i = 0;
 					}
-					result.push(i);
 				}
+				result.push(rangeEnd);
 			} else {
 				var weekday = weekdaysNames.indexOf(part);
 				assert(weekday != -1, "Incorrect weekday: " + part);
@@ -68,11 +70,11 @@ var TradingWeek = function(sessionSpec) {
 		var result = {};
 
 		var timeStrToSecondOfTheDay = function(str) {
-			var parts = str.split(str);
+			var parts = str.split(":");
 			if (parts.length == 2) {
-				return parts[0].parseInt() * 3600 + parts[1].parseInt() * 60;
+				return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60;
 			} else if(parts.length == 3) {
-				return parts[0].parseInt() * 3600 + parts[1].parseInt() * 60 + parts[2].parseInt();
+				return parseInt(parts[0]) * 3600 + parseInt(parts[1]) * 60 + parseInt(parts[2]);
 			} else {
 				assert(false, "Invalid time string: " + str);
 			}
@@ -101,13 +103,13 @@ var TradingWeek = function(sessionSpec) {
 	});
 }
 
-TradingWeek.prototype.sessionForDay = function(time) {
+TradingWeek.prototype.tradingDay = function(time) {
 	return new TradingDay(this.weekdays[time.day()]);
 };
 
 module.factory("$data_engine", function() {
 	return {
-		buildTradingWeek: function(sessionSpec) {
+		tradingWeek: function(sessionSpec) {
 			return new TradingWeek(sessionSpec);
 		},
 		renderTimeline: function(tradingWeek, now) {
