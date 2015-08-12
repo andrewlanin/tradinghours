@@ -11,8 +11,7 @@ var TradingDay = function(frames) {
 	this.frames = frames;
 }
 
-TradingDay.prototype.frameForTime = function(time) {
-	var secondOfTheDay = time.hour() * 3600 + time.minute() * 60 + time.second();
+TradingDay.prototype.frame = function(secondOfTheDay) {
 	for (var i=0; i<this.frames.length; i++) {
 		var frame = this.frames[i];
 		if (secondOfTheDay < frame.start) {
@@ -112,7 +111,32 @@ module.factory("$data_engine", function() {
 		tradingWeek: function(sessionSpec) {
 			return new TradingWeek(sessionSpec);
 		},
-		renderTimeline: function(tradingWeek, now) {
+		timeline: function(tradingWeek, now) {
+			var days = [
+				tradingWeek.tradingDay(now.clone().subtract(1, "days")),
+				tradingWeek.tradingDay(now)
+			];
+
+			var scale = 86400;
+			var marginLeft = 25920;
+
+			days[0].startFrom = 86400 - marginLeft;
+
+			var result = [];
+			for (var i = 0; i < days.length; i++) {
+				var day = days[i];
+				var t = day.startFrom || 0;
+				while (t < 86400) {
+					var frame = day.frame(t);
+					result.push({
+						percent: (frame.end - frame.start) / scale * 100,
+						type: frame.type
+					});
+					t = frame.end;
+				}
+			}
+
+			return result;
 		}
 	}
 })
