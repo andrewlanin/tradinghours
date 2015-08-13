@@ -7,6 +7,10 @@ var assert = function(condition, message) {
 	}
 }
 
+var secondOfTheDay = function(time) {
+	return time.hour() * 3600 + time.minute() * 60 + time.second();
+}
+
 var TradingDay = function(frames) {
 	this.frames = frames;
 }
@@ -114,6 +118,10 @@ TradingWeek.prototype.tradingDay = function(time) {
 	return new TradingDay(this.weekdays[time.day()]);
 };
 
+TradingWeek.prototype.frame = function(time) {
+	return this.tradingDay(time).frame(secondOfTheDay(time));
+};
+
 module.factory("$data_engine", function() {
 	return {
 		tradingWeek: function(sessionSpec) {
@@ -131,10 +139,10 @@ module.factory("$data_engine", function() {
 
 			var startDay = 0;
 
-			var secondOfTheDay = now.hour() * 3600 + now.minute() * 60 + now.second();
-			if (secondOfTheDay >= marginLeft) {
+			var secondOfCurrentDay = secondOfTheDay(now);
+			if (secondOfCurrentDay >= marginLeft) {
 				startDay = 1;
-				days[startDay].startFrom = secondOfTheDay - marginLeft;
+				days[startDay].startFrom = secondOfCurrentDay - marginLeft;
 			} else {
 				startDay = 0
 				days[startDay].startFrom = 86400 - (marginLeft - secondOfTheDay);

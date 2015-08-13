@@ -137,4 +137,56 @@ describe("Trading Hours data engine", function (argument) {
 		expect(function(){engine.tradingWeek(spec)}).
 			toThrow(new Error("Sessions overlapping"));
 	});
+
+	it("can select correct session by week day", function() {
+		var spec = [
+			{"days": "Sun","type": "Sun","start":"00:00","end":"01:00"},
+			{"days": "Mon","type": "Mon","start":"00:00","end":"01:00"},
+			{"days": "Tue","type": "Tue","start":"00:00","end":"01:00"},
+			{"days": "Wed","type": "Wed","start":"00:00","end":"01:00"},
+			{"days": "Thu","type": "Thu","start":"00:00","end":"01:00"},
+			{"days": "Fri","type": "Fri","start":"00:00","end":"01:00"},
+			{"days": "Sat","Sat": "Mon","start":"00:00","end":"01:00"}
+		];
+		var week = engine.tradingWeek(spec);
+		expect(week.tradingDay(moment("2015-08-10")).frames[0].type).toEqual("Mon");
+	});
+
+	it("can select correct frame by second of the day", function() {
+		var spec = [
+			{
+				"days": "Mon",
+				"start": "08:00",
+				"end": "16:00",
+				"type": "regular"
+			},
+			{
+				"days": "Mon",
+				"start": "07:00",
+				"end": "08:00",
+				"type": "premarket"
+			}
+		];
+		var week = engine.tradingWeek(spec);
+		expect(week.tradingDay(moment("2015-08-10")).frame(43200).type).toEqual("regular");
+	});
+
+	it("can select correct frame by time", function() {
+		var spec = [
+			{
+				"days": "Mon",
+				"start": "08:00",
+				"end": "16:00",
+				"type": "regular"
+			},
+			{
+				"days": "Mon",
+				"start": "07:00",
+				"end": "08:00",
+				"type": "premarket"
+			}
+		];
+		var week = engine.tradingWeek(spec);
+		expect(week.frame(moment("2015-08-10T12:00:00")).type).toEqual("regular");
+	});
 })
