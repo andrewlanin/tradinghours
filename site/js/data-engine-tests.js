@@ -105,4 +105,36 @@ describe("Trading Hours data engine", function (argument) {
 			[compiledEvening]	
 		]);
 	});
+
+	it("can't handle invalid weekday name", function() {
+		var spec = [
+			{
+				"days": "Mon,QWE",
+				"start": "08:00",
+				"end": "16:00",
+				"type": "regular"
+			}
+		];
+		expect(function(){engine.tradingWeek(spec)}).
+			toThrow(new Error("Incorrect weekday: QWE"));
+	});
+
+	it("can't handle overlapping sessions", function() {
+		var spec = [
+			{
+				"days": "Mon",
+				"start": "08:00",
+				"end": "16:00",
+				"type": "regular"
+			},
+			{
+				"days": "Mon",
+				"start": "07:00",
+				"end": "08:05",
+				"type": "premarket"
+			}
+		];
+		expect(function(){engine.tradingWeek(spec)}).
+			toThrow(new Error("Sessions overlapping"));
+	});
 })

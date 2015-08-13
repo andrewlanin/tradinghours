@@ -93,12 +93,20 @@ var TradingWeek = function(sessionSpec) {
 		});
 	});
 
-	_.each(weekdays, function(weekdaySpec){
-		_.sortBy()
-	})
+	var ensureSessionsNotOverlapping = function(frames) {
+		var prevFrameEnd;
+		_.each(frames, function(frame){
+			if (prevFrameEnd) {
+				assert(frame.start >= prevFrameEnd, "Sessions overlapping");
+			}
+			prevFrameEnd = frame.end;
+		});
+	}
 
 	this.weekdays = _.map(weekdays, function(weekdaySpec){
-		return _.sortBy(weekdaySpec, "start");
+		var sorted = _.sortBy(weekdaySpec, "start");
+		ensureSessionsNotOverlapping(sorted);
+		return sorted;
 	});
 }
 
