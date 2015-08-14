@@ -20,7 +20,7 @@ module.controller("ExchangeListController", [
 
 	var updateCurrentStates = function() {
 		_.each($scope.exchanges, function(exchange){
-			exchange._currentState = exchange._tradingWeek.frame($scope.now).type;
+			exchange._currentState = exchange._tradingWeek.frame($scope.now.tz(exchange.timezone)).type;
 		});
 	}
 
