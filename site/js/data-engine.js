@@ -1,6 +1,6 @@
-(function(){
-	var module = angular.module("DataEngine", []);
+var module = angular.module("DataEngine", []);
 
+module.factory("$data_engine", function() {
 	var SECONDS_IN_DAY = 86400;
 	var SECONDS_IN_HOUR = 3600;
 	var SECONDS_IN_MINUTE = 60;
@@ -127,57 +127,54 @@
 		return this.tradingDay(time).frame(secondOfTheDay(time));
 	};
 
-	module.factory("$data_engine", function() {
-		return {
-			tradingWeek: function(sessionSpec) {
-				return new TradingWeek(sessionSpec);
-			},
-			timeline: function(tradingWeek, now) {
-				var days = [
-					tradingWeek.tradingDay(now.clone().subtract(1, "days")),
-					tradingWeek.tradingDay(now.clone()),
-					tradingWeek.tradingDay(now.clone().add(1, "days"))
-				];
+	return {
+		tradingWeek: function(sessionSpec) {
+			return new TradingWeek(sessionSpec);
+		},
+		timeline: function(tradingWeek, now) {
+			var days = [
+				tradingWeek.tradingDay(now.clone().subtract(1, "days")),
+				tradingWeek.tradingDay(now.clone()),
+				tradingWeek.tradingDay(now.clone().add(1, "days"))
+			];
 
-				var scale = SECONDS_IN_DAY;
-				var marginLeft = 25920;
+			var scale = SECONDS_IN_DAY;
+			var marginLeft = 25920;
 
-				var startDay = 0;
+			var startDay = 0;
 
-				var secondOfCurrentDay = secondOfTheDay(now);
-				if (secondOfCurrentDay >= marginLeft) {
-					startDay = 1;
-					days[startDay].startFrom = secondOfCurrentDay - marginLeft;
-				} else {
-					startDay = 0
-					days[startDay].startFrom = SECONDS_IN_DAY - (marginLeft - secondOfTheDay);
-				}
-
-				var result = [];
-				var prevFrame;
-				for (var i = startDay; i < days.length; i++) {
-					var day = days[i];
-					var t = day.startFrom || 0;
-					while (t < SECONDS_IN_DAY) {
-						var frame = day.frame(t);
-						var frameLength = (frame.end - t) / scale * 100;
-						if (prevFrame && prevFrame.type == frame.type) {
-							prevFrame.percent += frameLength;
-						} else {
-							var newFrame = {
-								percent: frameLength,
-								type: frame.type
-							};
-							result.push(newFrame);
-							prevFrame = newFrame;
-						}
-						t = frame.end;
-					}
-				}
-
-				return result;
+			var secondOfCurrentDay = secondOfTheDay(now);
+			if (secondOfCurrentDay >= marginLeft) {
+				startDay = 1;
+				days[startDay].startFrom = secondOfCurrentDay - marginLeft;
+			} else {
+				startDay = 0
+				days[startDay].startFrom = SECONDS_IN_DAY - (marginLeft - secondOfTheDay);
 			}
-		}
-	});
 
-}());
+			var result = [];
+			var prevFrame;
+			for (var i = startDay; i < days.length; i++) {
+				var day = days[i];
+				var t = day.startFrom || 0;
+				while (t < SECONDS_IN_DAY) {
+					var frame = day.frame(t);
+					var frameLength = (frame.end - t) / scale * 100;
+					if (prevFrame && prevFrame.type == frame.type) {
+						prevFrame.percent += frameLength;
+					} else {
+						var newFrame = {
+							percent: frameLength,
+							type: frame.type
+						};
+						result.push(newFrame);
+						prevFrame = newFrame;
+					}
+					t = frame.end;
+				}
+			}
+
+			return result;
+		}
+	}
+});
