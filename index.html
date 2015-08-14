@@ -28,7 +28,7 @@
           </div>
         </div>
         <div class="col-xs-4">
-          <div class="current-time">{{now}}<small>:{{now_sec}}</small></div>
+          <div class="current-time">{{now_hm}}<small>:{{now_s}}</small></div>
           <div class="current-time-marker-top"></div>
         </div>
       </div>
@@ -39,13 +39,19 @@
             <span class="glyphicon glyphicon-star highlighted-action"></span>
           </div>
           <span class="exchange-name">{{exchange.full_name}}</span>
-          <span class="text-muted">&#9679;&nbsp;Out Of Session</span>
+          <NONE ng-switch on="exchange._currentState">
+            <span ng-switch-when="out" class="text-muted">&#9679;&nbsp;Out Of Session</span>
+            <span ng-switch-when="regular" class="text-success">&#9679;&nbsp;In Session</span>
+            <span ng-switch-when="premarket" class="text-warning">&#9679;&nbsp;Premarket</span>
+            <span ng-switch-when="postmarket" class="text-warning">&#9679;&nbsp;Postmaret</span>
+          </NONE>
         </div>
         <div class="col-xs-4">
           <div class="progress timeline">
             <NONE ng-repeat="frame in exchange._timeline" ng-switch on="frame.type">
                 <div ng-switch-when="out" class="progress-bar" style="width: 0;margin-left:{{frame.percent}}%;"></div>
                 <div ng-switch-when="premarket" class="progress-bar progress-bar-warning" style="width: {{frame.percent}}%"></div>
+                <div ng-switch-when="postmarket" class="progress-bar progress-bar-warning" style="width: {{frame.percent}}%"></div>
                 <div ng-switch-when="regular" class="progress-bar progress-bar-success" style="width: {{frame.percent}}%;"></div>
             </NONE>
           </div>
