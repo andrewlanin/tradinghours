@@ -11,11 +11,28 @@ module.controller("ExchangeListController", [
 
 	render_current_time();
 	$interval(render_current_time, 1000);
-	
+
 	$scope.exchanges = _.map(exchanges(), function(exchange){
 		exchange._tradingWeek = $data_engine.tradingWeek(exchange.trading_hours);
-		exchange._currentState = exchange._tradingWeek.frame($scope.now).type;
-		exchange._timeline = $data_engine.timeline(exchange._tradingWeek, $scope.now.tz(exchange.timezone));
+		
 		return exchange;
 	});
+
+	var updateCurrentStates = function() {
+		_.each($scope.exchanges, function(exchange){
+			exchange._currentState = exchange._tradingWeek.frame($scope.now).type;
+		});
+	}
+
+	updateCurrentStates();
+	$interval(updateCurrentStates, 60000);
+
+	var calculateTimelines = function() {
+		_.each($scope.exchanges, function(exchange){
+			exchange._timeline = $data_engine.timeline(exchange._tradingWeek, $scope.now.tz(exchange.timezone));
+		});
+	}
+
+	calculateTimelines();
+	$interval(calculateTimelines, 600000);
 }])
