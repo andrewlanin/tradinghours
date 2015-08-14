@@ -189,4 +189,17 @@ describe("Trading Hours data engine", function (argument) {
 		var week = engine.tradingWeek(spec);
 		expect(week.frame(moment("2015-08-10T12:00:00")).type).toEqual("regular");
 	});
+
+	it("can handle full day session", function() {
+		var spec = [
+			{
+				"days": "Mon",
+				"start": "00:00",
+				"end": "00:00",
+				"type": "regular"
+			}
+		];
+		var week = engine.tradingWeek(spec);
+		expect(week.frame(moment("2015-08-10T12:00:00")).type).toEqual("regular");
+	});
 })
