@@ -154,15 +154,23 @@
 				}
 
 				var result = [];
+				var prevFrame;
 				for (var i = startDay; i < days.length; i++) {
 					var day = days[i];
 					var t = day.startFrom || 0;
 					while (t < SECONDS_IN_DAY) {
 						var frame = day.frame(t);
-						result.push({
-							percent: (frame.end - t) / scale * 100,
-							type: frame.type
-						});
+						var frameLength = (frame.end - t) / scale * 100;
+						if (prevFrame && prevFrame.type == frame.type) {
+							prevFrame.percent += frameLength;
+						} else {
+							var newFrame = {
+								percent: frameLength,
+								type: frame.type
+							};
+							result.push(newFrame);
+							prevFrame = newFrame;
+						}
 						t = frame.end;
 					}
 				}
