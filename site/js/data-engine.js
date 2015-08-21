@@ -162,7 +162,6 @@ module.factory("$data_engine", function() {
 				}
 				time = time.startOf("day").add(1, "days");
 			}
-			console.log(frames);
 			return frames;
 		}
 	}
