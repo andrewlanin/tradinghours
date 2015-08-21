@@ -15,6 +15,26 @@ module.controller("ExchangeListController", [
 	$scope.exchanges = _.map(exchanges(), function(exchange){
 		exchange._tradingWeek = $data_engine.tradingWeek(exchange.trading_hours);
 		
+		var sessionStrings = [];
+		var sessionsByDays = _.groupBy(exchange.trading_hours, "days");
+		_.forEach(sessionsByDays, function(specs, days) {
+			var sessionString = days + ": ";
+			var sessionsOrder = ["premarket", "regular", "postmarket"];
+			var sortedSpecs = _.sortBy(specs, function(spec){
+				var i = sessionsOrder.indexOf(spec.type);
+				return i == -1 ? 1000 : i;
+			});
+			_.forEach(sortedSpecs, function(spec, i) {
+				var typeMarkers = {
+					"premarket": " (Pre)",
+					"postmarket": " (Post)"
+				}
+				var marker = typeMarkers[spec.type] || "";
+				sessionString += (i ? ", " : "" ) + spec.start + "-" + spec.end + marker;
+			});
+			sessionStrings.push(sessionString);
+		});
+		exchange._sessionString = sessionStrings.join(" ");
 		return exchange;
 	});
 

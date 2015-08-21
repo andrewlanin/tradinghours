@@ -39,12 +39,13 @@
             <span class="glyphicon glyphicon-star highlighted-action"></span>
           </div>
           <span class="exchange-name">{{exchange.full_name}}</span>
-          <NONE ng-switch on="exchange._currentState">
-            <span ng-switch-when="out" class="text-muted">&#9679;&nbsp;Out Of Session</span>
-            <span ng-switch-when="regular" class="text-success">&#9679;&nbsp;In Session</span>
+          <span ng-switch on="exchange._currentState">
+            <span ng-switch-when="out" class="text-muted">&#9679;&nbsp;Trading Closed</span>
+            <span ng-switch-when="regular" class="text-success">&#9679;&nbsp;Trading Open</span>
             <span ng-switch-when="premarket" class="text-warning">&#9679;&nbsp;Premarket</span>
             <span ng-switch-when="postmarket" class="text-warning">&#9679;&nbsp;Postmaret</span>
-          </NONE>
+          </span>
+          &#9679;&nbsp;{{exchange._sessionString}}
         </div>
         <div class="col-xs-4">
           <svg width="100%">
