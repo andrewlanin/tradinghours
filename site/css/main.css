@@ -37,10 +37,20 @@
     font-size: 16px;
 }
 
-.timeline {
-    position: absolute;
-    width: 100%;
-    z-index: 1;
+.timeline-frame-out {
+    fill: black;
+    opacity: 0.2;
+}
+
+.timeline-frame-regular {
+    fill: green;
+    opacity: 0.8;
+}
+
+.timeline-frame-premarket,
+.timeline-frame-postmarket {
+    fill: orange;
+    opacity: 1;
 }
 
 .actions-panel {

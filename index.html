@@ -47,14 +47,11 @@
           </NONE>
         </div>
         <div class="col-xs-4">
-          <div class="progress timeline">
-            <NONE ng-repeat="frame in exchange._timeline" ng-switch on="frame.type">
-                <div ng-switch-when="out" class="progress-bar" style="width: 0;margin-left:{{frame.percent}}%;"></div>
-                <div ng-switch-when="premarket" class="progress-bar progress-bar-warning" style="width: {{frame.percent}}%"></div>
-                <div ng-switch-when="postmarket" class="progress-bar progress-bar-warning" style="width: {{frame.percent}}%"></div>
-                <div ng-switch-when="regular" class="progress-bar progress-bar-success" style="width: {{frame.percent}}%;"></div>
-            </NONE>
-          </div>
+          <svg width="100%">
+            <g ng-repeat="frame in exchange._timeline">
+              <rect ng-attr-x="{{frame.offsetPercent}}%" ng-attr-width="{{frame.lengthPercent}}%" height="20" ng-attr-class="timeline-frame-{{frame.type}}"></rect>
+            </g>
+          </svg>
           <div class="current-time-marker">
           </div>
         </div>
