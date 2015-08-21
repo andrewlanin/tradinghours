@@ -29,7 +29,7 @@ module.controller("ExchangeListController", [
 
 	var calculateTimelines = function() {
 		_.each($scope.exchanges, function(exchange){
-			exchange._timeline = $data_engine.timeline(exchange._tradingWeek, $scope.now.tz(exchange.timezone));
+			exchange._timeline = $data_engine.timeline(exchange._tradingWeek, $scope.now.tz(exchange.timezone), 86400, 25920);
 		});
 	}
 

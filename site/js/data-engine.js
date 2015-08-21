@@ -131,50 +131,39 @@ module.factory("$data_engine", function() {
 		tradingWeek: function(sessionSpec) {
 			return new TradingWeek(sessionSpec);
 		},
-		timeline: function(tradingWeek, now) {
-			var days = [
-				tradingWeek.tradingDay(now.clone().subtract(1, "days")),
-				tradingWeek.tradingDay(now.clone()),
-				tradingWeek.tradingDay(now.clone().add(1, "days"))
-			];
-
-			var scale = SECONDS_IN_DAY;
-			var marginLeft = 25920;
-
-			var startDay = 0;
-
-			var secondOfCurrentDay = secondOfTheDay(now);
-			if (secondOfCurrentDay >= marginLeft) {
-				startDay = 1;
-				days[startDay].startFrom = secondOfCurrentDay - marginLeft;
-			} else {
-				startDay = 0
-				days[startDay].startFrom = SECONDS_IN_DAY - (marginLeft - secondOfTheDay);
-			}
-
-			var result = [];
+		timeline: function(tradingWeek, now, length, marginLeft) {
+			var time = now.subtract(marginLeft, "seconds");
+			var totalLength = 0;
+			var frames = [];
 			var prevFrame;
-			for (var i = startDay; i < days.length; i++) {
-				var day = days[i];
-				var t = day.startFrom || 0;
-				while (t < SECONDS_IN_DAY) {
-					var frame = day.frame(t);
-					var frameLength = (frame.end - t) / scale * 100;
+			while (totalLength < length) {
+				var tradingDay = tradingWeek.tradingDay(time);
+				var second = secondOfTheDay(time);
+				while (second < SECONDS_IN_DAY) {
+					var frame = tradingDay.frame(second);
+					var frameLength = Math.min(frame.end - second, length - totalLength);
 					if (prevFrame && prevFrame.type == frame.type) {
-						prevFrame.percent += frameLength;
+						// merge neighbour frames with same type
+						prevFrame.length += frameLength;
+						prevFrame.lengthPercent = prevFrame.length / length * 100;
 					} else {
 						var newFrame = {
-							percent: frameLength,
+							offset: totalLength,
+							offsetPercent: totalLength / length * 100,
+							length: frameLength,
+							lengthPercent: frameLength / length * 100,
 							type: frame.type
 						};
-						result.push(newFrame);
+						frames.push(newFrame);
 						prevFrame = newFrame;
 					}
-					t = frame.end;
+					second = frame.end;
+					totalLength += frameLength;
 				}
+				time = time.startOf("day").add(1, "days");
 			}
-
-			return result;
+			console.log(frames);
+			return frames;
 		}
 	}
 });
