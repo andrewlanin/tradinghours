@@ -214,7 +214,7 @@ describe("Trading Hours data engine", function (argument) {
 		];
 		var week = engine.tradingWeek(spec);
 		var timeline = engine.timeline(week, moment("2015-01-01T00:00:00"), 86400, 3600);
-		var timelineValues = _.map(timeline, function(frame) {
+		var timelineValues = _.map(timeline.frames, function(frame) {
 			return [frame.type, frame.offset, frame.length];
 		});
 		expect(timelineValues).toEqual([["out", 0, 3600], ["regular", 3600, 28800], ["out", 32400, 54000]]);

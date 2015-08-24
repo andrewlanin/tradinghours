@@ -133,6 +133,7 @@ module.factory("$data_engine", function() {
 		},
 		timeline: function(tradingWeek, now, length, marginLeft) {
 			var time = now.subtract(marginLeft, "seconds");
+			var secondsToNextHour = SECONDS_IN_HOUR - time.minute() * SECONDS_IN_MINUTE - time.second(); 
 			var totalLength = 0;
 			var frames = [];
 			var prevFrame;
@@ -162,7 +163,19 @@ module.factory("$data_engine", function() {
 				}
 				time = time.startOf("day").add(1, "days");
 			}
-			return frames;
+			var hoursBreaks = [];
+			var offset = secondsToNextHour;
+			while (offset < length) {
+				hoursBreaks.push({
+					offset: offset,
+					offsetPercent: offset / length * 100
+				});
+				offset += SECONDS_IN_HOUR;
+			}
+			return {
+				frames: frames,
+				hoursBreaks: hoursBreaks
+			};
 		}
 	}
 });
