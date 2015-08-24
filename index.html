@@ -37,9 +37,6 @@
 
       <div class="row exchange-row" ng-repeat="exchange in exchanges">
         <div class="col-xs-8">
-          <div class="actions-panel">
-            <span class="glyphicon glyphicon-star highlighted-action"></span>
-          </div>
           <span class="exchange-name">{{exchange.full_name}}</span>
           <span ng-switch on="exchange._currentState">
             <span ng-switch-when="out" class="text-muted">&#9679;&nbsp;Trading Closed</span>
@@ -47,7 +44,10 @@
             <span ng-switch-when="premarket" class="text-warning">&#9679;&nbsp;Premarket</span>
             <span ng-switch-when="postmarket" class="text-warning">&#9679;&nbsp;Postmaret</span>
           </span>
-          &#9679;&nbsp;{{exchange._sessionString}}
+          <p>
+            <span class="glyphicon glyphicon-globe"></span> {{exchange.timezone}} 
+            <span class="glyphicon glyphicon-time"></span> {{exchange._sessionString}}
+          </p>
         </div>
         <div class="col-xs-4">
           <div class="layers-container">
@@ -66,7 +66,7 @@
 
     <footer>
       <div class="container">
-        Made by Andrew Lanin &lt;&nbsp;<em>ndrewln@gmail.com</em>&nbsp;&gt; &#9679;&nbsp<a href="#">Source code</a> &#9679;&nbsp<a href="#">Report data issue</a>
+        Made by Andrew Lanin &lt;&nbsp;<em>ndrewln@gmail.com</em>&nbsp;&gt; &#9679;&nbsp<a target="_blank" href="https://github.com/ndrewln/tradinghours">Source code</a>
       </div>
     </footer>
 	</body>
