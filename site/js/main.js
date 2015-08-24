@@ -2,21 +2,19 @@ var module = angular.module("TradingHours", ["DataEngine"]);
 
 module.controller("ExchangeListController", [
                   "$scope", "$interval", "$data_engine",
-                  function($scope, $interval, $data_engine) {
-	var render_current_time = function() {
+                  function($scope, $interval, $engine) {
+	var renderCurrentTime = function() {
 		$scope.now = moment.utc();
 		$scope.now_hm = $scope.now.format("HH:mm");
 		$scope.now_s = $scope.now.format("ss");
 	}
 
-	render_current_time();
-	$interval(render_current_time, 1000);
+	renderCurrentTime();
+	$interval(renderCurrentTime, 1000);
 
-	$scope.exchanges = _.map(exchanges(), function(exchange){
-		exchange._tradingWeek = $data_engine.tradingWeek(exchange.trading_hours);
-		
+	var formatSession = function(tradingHoursSpec) {
 		var sessionStrings = [];
-		var sessionsByDays = _.groupBy(exchange.trading_hours, "days");
+		var sessionsByDays = _.groupBy(tradingHoursSpec, "days");
 		_.forEach(sessionsByDays, function(specs, days) {
 			var sessionString = days + ": ";
 			var sessionsOrder = ["premarket", "regular", "postmarket"];
@@ -34,25 +32,30 @@ module.controller("ExchangeListController", [
 			});
 			sessionStrings.push(sessionString);
 		});
-		exchange._sessionString = sessionStrings.join(" ");
+		return sessionStrings.join(" ");
+	}
+
+	$scope.exchanges = _.map(exchanges(), function(exchange){
+		exchange._tradingWeek = $engine.tradingWeek(exchange.trading_hours);
+		exchange._sessionString = formatSession(exchange.trading_hours);
 		return exchange;
 	});
 
-	var updateCurrentStates = function() {
+	var updateCurrentTradingStates = function() {
 		_.each($scope.exchanges, function(exchange){
 			exchange._currentState = exchange._tradingWeek.frame($scope.now.tz(exchange.timezone)).type;
 		});
 	}
 
-	updateCurrentStates();
-	$interval(updateCurrentStates, 60000);
+	updateCurrentTradingStates();
+	$interval(updateCurrentTradingStates, 60000);
 
 	var calculateTimelines = function() {
 		_.each($scope.exchanges, function(exchange){
-			exchange._timeline = $data_engine.timeline(exchange._tradingWeek, $scope.now.tz(exchange.timezone), 86400, 25920);
+			exchange._timeline = $engine.timeline(exchange._tradingWeek, $scope.now.tz(exchange.timezone), 86400, 25920);
 		});
 	}
 
 	calculateTimelines();
-	$interval(calculateTimelines, 600000);
+	$interval(calculateTimelines, 60000);
 }])
