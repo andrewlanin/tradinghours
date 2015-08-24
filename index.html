@@ -37,7 +37,7 @@
 
       <div class="row exchange-row" ng-repeat="exchange in exchanges">
         <div class="col-xs-8">
-          <span class="exchange-name">{{exchange.full_name}}</span>
+          <span class="exchange-name">{{exchange.name}}</span>
           <span ng-switch on="exchange._currentState">
             <span ng-switch-when="out" class="text-muted">&#9679;&nbsp;Trading Closed</span>
             <span ng-switch-when="regular" class="text-success">&#9679;&nbsp;Trading Open</span>

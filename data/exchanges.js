@@ -1,8 +1,7 @@
 function exchanges() {
 	return [	
 		{
-			"short_name": "NYSE",
-			"full_name": "New York Stock Exchange",
+			"name": "New York Stock Exchange",
 			"timezone": "America/New_York",
 			"trading_hours": [
 				{
