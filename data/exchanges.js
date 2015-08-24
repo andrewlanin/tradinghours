@@ -11,18 +11,7 @@ function exchanges() {
 					"start": "08:30",
 					"end": "16:30"
 				}
-			],
-			"holidays": [
-				{ref: "USA"}
 			]
 		}
 	]
-}
-
-function holidays() {
-	return {
-		"USA": [
-			"2015-01-01"
-		]
-	}
 }
