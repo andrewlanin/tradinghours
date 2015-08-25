@@ -43,7 +43,7 @@ module.controller("ExchangeListController", [
 
 	var updateCurrentTradingStates = function() {
 		_.each($scope.exchanges, function(exchange){
-			exchange._currentState = exchange._tradingWeek.frame($scope.now.tz(exchange.timezone)).type;
+			exchange._currentState = exchange._tradingWeek.frame($scope.now.clone().tz(exchange.timezone)).type;
 		});
 	}
 
@@ -52,7 +52,7 @@ module.controller("ExchangeListController", [
 
 	var calculateTimelines = function() {
 		_.each($scope.exchanges, function(exchange){
-			exchange._timeline = $engine.timeline(exchange._tradingWeek, $scope.now.tz(exchange.timezone), 86400, 25920);
+			exchange._timeline = $engine.timeline(exchange._tradingWeek, $scope.now.clone().tz(exchange.timezone), 86400, 25920);
 		});
 	}
 
