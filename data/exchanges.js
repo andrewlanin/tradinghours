@@ -103,7 +103,7 @@ function exchanges() {
 			]
 		},
 		{
-			"name": "MOEX Derivatives & FX",
+			"name": "MOEX Derivatives, FX & Commodities",
 			"timezone": "Europe/Moscow",
 			"link": "http://moex.com/s371",
 			"trading_hours": [
