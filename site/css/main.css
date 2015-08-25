@@ -6,18 +6,22 @@
     position: absolute;
 }
 
+.current-time-container {
+    height: 60px;
+}
+
 .current-time {
     border-bottom: 2px solid black;
     width: 50%;
     height: 40px;
     margin-left: 30px;
-    margin-top: 60px;
+    margin-top: 10px;
     text-align: center;
     font-size: 24px;
 }
 
 .current-time-marker-top {
-    top: 100px;
+    top: 50px;
     height: 100px;
     width: 30%;
     border-right: 2px solid black;
