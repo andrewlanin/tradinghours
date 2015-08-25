@@ -35,11 +35,11 @@ module.controller("ExchangeListController", [
 		return sessionStrings.join(" ");
 	}
 
-	$scope.exchanges = _.map(exchanges(), function(exchange){
+	$scope.exchanges = _.sortBy(_.map(exchanges(), function(exchange){
 		exchange._tradingWeek = $engine.tradingWeek(exchange.trading_hours);
 		exchange._sessionString = formatSession(exchange.trading_hours);
 		return exchange;
-	});
+	}), "name");
 
 	var updateCurrentTradingStates = function() {
 		_.each($scope.exchanges, function(exchange){
