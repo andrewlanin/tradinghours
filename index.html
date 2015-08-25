@@ -45,14 +45,14 @@
             <span ng-switch-when="premarket" class="text-warning">&#9679;&nbsp;Premarket</span>
             <span ng-switch-when="postmarket" class="text-warning">&#9679;&nbsp;Postmaret</span>
           </span>
-          <p>
+          <p class="exchange-second-line">
             <span class="glyphicon glyphicon-globe"></span> {{exchange.timezone}} 
             <span class="glyphicon glyphicon-time"></span> {{exchange._sessionString}}
           </p>
         </div>
         <div class="col-xs-4">
           <div class="layers-container">
-            <svg class="layer" width="100%" height="20px">
+            <svg class="layer timeline" width="100%" height="20px">
               <rect ng-repeat="frame in exchange._timeline.frames" ng-attr-x="{{frame.offsetPercent}}%" ng-attr-width="{{frame.lengthPercent}}%" height="20" ng-attr-class="timeline-frame-{{frame.type}}" />
               <g ng-repeat="break in exchange._timeline.hoursBreaks">
                 <line ng-attr-x1="{{break.offsetPercent}}%" ng-attr-x2="{{break.offsetPercent}}%" y1="0" y2="3" class="timeline-hour-break" />
