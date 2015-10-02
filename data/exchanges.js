@@ -115,5 +115,30 @@ function exchanges() {
 				}
 			]
 		},
+		{
+			"name": "FXCM",
+			"timezone": "America/New_York",
+			"link": "http://www.dailyfx.com/forex_forum/order-execution-forex-trading-hours/201213-weekend-trading-execution-faq.html#post576907",
+			"trading_hours": [
+				{
+					"days": "Sun",
+					"type": "regular",
+					"start": "17:00",
+					"end": "00:00"
+				},
+				{
+					"days": "Mon-Thu",
+					"type": "regular",
+					"start": "00:00",
+					"end": "00:00"
+				},
+				{
+					"days": "Fri",
+					"type": "regular",
+					"start": "00:00",
+					"end": "17:00"
+				}
+			]
+		},
 	]
 }
