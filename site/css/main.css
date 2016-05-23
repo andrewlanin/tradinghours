@@ -18,6 +18,7 @@
     margin-top: 10px;
     text-align: center;
     font-size: 24px;
+    font-family: monospace;
 }
 
 .current-time-marker-top {
@@ -47,6 +48,12 @@
 
 .exchange-second-line {
     margin-bottom: 0;
+}
+
+.exchange-time {
+    padding-top: 10px;
+    font-family: monospace;
+    text-align: right;
 }
 
 .timeline {

@@ -33,4 +33,8 @@ module.controller("ExchangeListController", [
 
 	calculateTimelines();
 	$interval(calculateTimelines, 60000);
+
+	$scope.formatExchangeTime = function(exchange) {
+		return exchange.localTime($scope.now).format("ddd, HH:mm");
+	}
 }])
