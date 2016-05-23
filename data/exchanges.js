@@ -1,5 +1,5 @@
 function exchanges() {
-	return [	
+	return [
 		{
 			"name": "NYSE",
 			"timezone": "America/New_York",
@@ -140,5 +140,81 @@ function exchanges() {
 				}
 			]
 		},
+		{
+			"name": "Chi-X Europe",
+			"timezone": "Europe/London",
+			"link": "http://batstrading.co.uk/support/hours/",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "premarket",
+					"start": "07:50",
+					"end": "08:00"
+				},
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "08:00",
+					"end": "16:30"
+				},
+				{
+					"days": "Mon-Fri",
+					"type": "postmarket",
+					"start": "16:35",
+					"end": "17:30"
+				}
+			]
+		},
+		{
+			"name": "Chi-X Japan",
+			"timezone": "Asia/Tokyo",
+			"link": "http://www.chi-x.jp/TRADINGONCHI-X/TRADINGSCHEDULE.aspx",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "09:00",
+					"end": "11:30"
+				},
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "12:30",
+					"end": "15:00"
+				}
+			]
+		},
+		{
+			"name": "Bm&fBovespa Equities, Stock options, Odd lots, ETFs",
+			"timezone": "Brazil/São Paulo",
+			"link": "http://www.bmfbovespa.com.br/en_us/services/trading/bm-fbovespapuma-trading-system/for-members-and-traders/trading-hours/equities/",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "10:00",
+					"end": "16:55"
+				},
+				{
+					"days": "Mon-Fri",
+					"type": "postmarket",
+					"start": "17:30",
+					"end": "18:00"
+				}
+			]
+		},
+		{
+			"name": "Bm&fBovespa Derivatives, Index futures, FX",
+			"timezone": "Brazil/São Paulo",
+			"link": "http://www.bmfbovespa.com.br/en_us/services/trading/bm-fbovespapuma-trading-system/for-members-and-traders/trading-hours/derivatives/",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "09:00",
+					"end": "17:45"
+				}
+			]
+		}
 	]
 }
