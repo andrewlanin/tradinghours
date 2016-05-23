@@ -185,8 +185,8 @@ function exchanges() {
 			]
 		},
 		{
-			"name": "Bm&fBovespa Equities, Stock options, Odd lots, ETFs",
-			"timezone": "Brazil/São Paulo",
+			"name": "BM&F Bovespa Equities, Stock options, Odd lots, ETFs",
+			"timezone": "America/Sao_Paulo",
 			"link": "http://www.bmfbovespa.com.br/en_us/services/trading/bm-fbovespapuma-trading-system/for-members-and-traders/trading-hours/equities/",
 			"trading_hours": [
 				{
@@ -204,8 +204,8 @@ function exchanges() {
 			]
 		},
 		{
-			"name": "Bm&fBovespa Derivatives, Index futures, FX",
-			"timezone": "Brazil/São Paulo",
+			"name": "BM&F Bovespa Derivatives, Index futures, FX",
+			"timezone": "America/Sao_Paulo",
 			"link": "http://www.bmfbovespa.com.br/en_us/services/trading/bm-fbovespapuma-trading-system/for-members-and-traders/trading-hours/derivatives/",
 			"trading_hours": [
 				{
