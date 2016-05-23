@@ -31,24 +31,24 @@
 
       <div class="row exchange-row" ng-repeat="exchange in exchanges">
         <div class="col-xs-8">
-          <span class="exchange-name">{{exchange.name}}</span>
-          <a target="_blank" href="{{exchange.link}}"><span class="glyphicon glyphicon-new-window"></span></a>
-          <span ng-switch on="exchange._currentState">
+          <span class="exchange-name">{{exchange.spec.name}}</span>
+          <a target="_blank" href="{{exchange.spec.link}}"><span class="glyphicon glyphicon-new-window"></span></a>
+          <span ng-switch on="exchange.tradingState">
             <span ng-switch-when="out" class="text-muted">&#9679;&nbsp;Trading Closed</span>
             <span ng-switch-when="regular" class="text-success">&#9679;&nbsp;Trading Open</span>
             <span ng-switch-when="premarket" class="text-warning">&#9679;&nbsp;Pre-Market</span>
             <span ng-switch-when="postmarket" class="text-warning">&#9679;&nbsp;Post-Market</span>
           </span>
           <p class="exchange-second-line">
-            <span class="glyphicon glyphicon-globe"></span> {{exchange.timezone}} 
-            <span class="glyphicon glyphicon-time"></span> {{exchange._sessionString}}
+            <span class="glyphicon glyphicon-globe"></span> {{exchange.spec.timezone}} 
+            <span class="glyphicon glyphicon-time"></span> {{exchange.sessionString}}
           </p>
         </div>
         <div class="col-xs-4">
           <div class="layers-container">
             <svg class="layer timeline" width="100%" height="20px">
-              <rect ng-repeat="frame in exchange._timeline.frames" ng-attr-x="{{frame.offsetPercent}}%" ng-attr-width="{{frame.lengthPercent}}%" height="20" ng-attr-class="timeline-frame-{{frame.type}}" />
-              <g ng-repeat="break in exchange._timeline.hoursBreaks">
+              <rect ng-repeat="frame in exchange.timeline.frames" ng-attr-x="{{frame.offsetPercent}}%" ng-attr-width="{{frame.lengthPercent}}%" height="20" ng-attr-class="timeline-frame-{{frame.type}}" />
+              <g ng-repeat="break in exchange.timeline.hoursBreaks">
                 <line ng-attr-x1="{{break.offsetPercent}}%" ng-attr-x2="{{break.offsetPercent}}%" y1="0" y2="3" class="timeline-hour-break" />
                 <line ng-attr-x1="{{break.offsetPercent}}%" ng-attr-x2="{{break.offsetPercent}}%" y1="17" y2="20" class="timeline-hour-break" />
               </g>

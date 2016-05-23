@@ -12,38 +12,13 @@ module.controller("ExchangeListController", [
 	renderCurrentTime();
 	$interval(renderCurrentTime, 1000);
 
-	var formatSession = function(tradingHoursSpec) {
-		var sessionStrings = [];
-		var sessionsByDays = _.groupBy(tradingHoursSpec, "days");
-		_.forEach(sessionsByDays, function(specs, days) {
-			var sessionString = days + ": ";
-			var sessionsOrder = ["premarket", "regular", "postmarket"];
-			var sortedSpecs = _.sortBy(specs, function(spec){
-				var i = sessionsOrder.indexOf(spec.type);
-				return i == -1 ? 1000 : i;
-			});
-			_.forEach(sortedSpecs, function(spec, i) {
-				var typeMarkers = {
-					"premarket": " (Pre)",
-					"postmarket": " (Post)"
-				}
-				var marker = typeMarkers[spec.type] || "";
-				sessionString += (i ? ", " : "" ) + spec.start + "-" + spec.end + marker;
-			});
-			sessionStrings.push(sessionString);
-		});
-		return sessionStrings.join(" ");
-	}
-
-	$scope.exchanges = _.sortBy(_.map(exchanges(), function(exchange){
-		exchange._tradingWeek = $engine.tradingWeek(exchange.trading_hours);
-		exchange._sessionString = formatSession(exchange.trading_hours);
-		return exchange;
-	}), "name");
+	$scope.exchanges = _.sortBy(_.map(exchanges(), function(exchangeSpec){
+		return $engine.exchange(exchangeSpec);
+	}), function(e) {return e.spec.name});
 
 	var updateCurrentTradingStates = function() {
 		_.each($scope.exchanges, function(exchange){
-			exchange._currentState = exchange._tradingWeek.frame($scope.now.clone().tz(exchange.timezone)).type;
+			exchange.updateTradingState($scope.now);
 		});
 	}
 
@@ -52,7 +27,7 @@ module.controller("ExchangeListController", [
 
 	var calculateTimelines = function() {
 		_.each($scope.exchanges, function(exchange){
-			exchange._timeline = $engine.timeline(exchange._tradingWeek, $scope.now.clone().tz(exchange.timezone), 86400, 25920);
+			exchange.updateTimeline($scope.now, 86400, 25920);
 		});
 	}
 

@@ -127,55 +127,101 @@ module.factory("$data_engine", function() {
 		return this.tradingDay(time).frame(secondOfTheDay(time));
 	};
 
+	var Exchange = function(spec) {
+		this.spec = spec;
+		this.tradingWeek = new TradingWeek(spec.trading_hours);
+		this.sessionString = this.formatSession();
+	}
+
+	Exchange.prototype.localTime = function(utc) {
+		return utc.clone().tz(this.spec.timezone);
+	}
+
+	Exchange.prototype.formatSession = function() {
+		var sessionStrings = [];
+		var sessionsByDays = _.groupBy(this.spec.trading_hours, "days");
+		_.forEach(sessionsByDays, function(specs, days) {
+			var sessionString = days + ": ";
+			var sessionsOrder = ["premarket", "regular", "postmarket"];
+			var sortedSpecs = _.sortBy(specs, function(spec){
+				var i = sessionsOrder.indexOf(spec.type);
+				return i == -1 ? 1000 : i;
+			});
+			_.forEach(sortedSpecs, function(spec, i) {
+				var typeMarkers = {
+					"premarket": " (Pre)",
+					"postmarket": " (Post)"
+				}
+				var marker = typeMarkers[spec.type] || "";
+				sessionString += (i ? ", " : "" ) + spec.start + "-" + spec.end + marker;
+			});
+			sessionStrings.push(sessionString);
+		});
+		return sessionStrings.join(" ");
+	}
+
+	Exchange.prototype.updateTradingState = function(now) {
+		this.tradingState = this.tradingWeek.frame(this.localTime(now)).type;
+	}
+
+	Exchange.prototype.updateTimeline = function(now, length, marginLeft) {
+		this.timeline = calculateTimeline(this.tradingWeek, this.localTime(now), length, marginLeft);
+	}
+
+	var calculateTimeline = function(tradingWeek, now, length, marginLeft) {
+		var time = now.subtract(marginLeft, "seconds");
+		var secondsToNextHour = SECONDS_IN_HOUR - time.minute() * SECONDS_IN_MINUTE - time.second(); 
+		var totalLength = 0;
+		var frames = [];
+		var prevFrame;
+		while (totalLength < length) {
+			var tradingDay = tradingWeek.tradingDay(time);
+			var second = secondOfTheDay(time);
+			while (second < SECONDS_IN_DAY) {
+				var frame = tradingDay.frame(second);
+				var frameLength = Math.min(frame.end - second, length - totalLength);
+				if (prevFrame && prevFrame.type == frame.type) {
+					// merge neighbour frames with same type
+					prevFrame.length += frameLength;
+					prevFrame.lengthPercent = prevFrame.length / length * 100;
+				} else {
+					var newFrame = {
+						offset: totalLength,
+						offsetPercent: totalLength / length * 100,
+						length: frameLength,
+						lengthPercent: frameLength / length * 100,
+						type: frame.type
+					};
+					frames.push(newFrame);
+					prevFrame = newFrame;
+				}
+				second = frame.end;
+				totalLength += frameLength;
+			}
+			time = time.startOf("day").add(1, "days");
+		}
+		var hoursBreaks = [];
+		var offset = secondsToNextHour;
+		while (offset < length) {
+			hoursBreaks.push({
+				offset: offset,
+				offsetPercent: offset / length * 100
+			});
+			offset += SECONDS_IN_HOUR;
+		}
+		return {
+			frames: frames,
+			hoursBreaks: hoursBreaks
+		};
+	}
+
 	return {
 		tradingWeek: function(sessionSpec) {
 			return new TradingWeek(sessionSpec);
 		},
-		timeline: function(tradingWeek, now, length, marginLeft) {
-			var time = now.subtract(marginLeft, "seconds");
-			var secondsToNextHour = SECONDS_IN_HOUR - time.minute() * SECONDS_IN_MINUTE - time.second(); 
-			var totalLength = 0;
-			var frames = [];
-			var prevFrame;
-			while (totalLength < length) {
-				var tradingDay = tradingWeek.tradingDay(time);
-				var second = secondOfTheDay(time);
-				while (second < SECONDS_IN_DAY) {
-					var frame = tradingDay.frame(second);
-					var frameLength = Math.min(frame.end - second, length - totalLength);
-					if (prevFrame && prevFrame.type == frame.type) {
-						// merge neighbour frames with same type
-						prevFrame.length += frameLength;
-						prevFrame.lengthPercent = prevFrame.length / length * 100;
-					} else {
-						var newFrame = {
-							offset: totalLength,
-							offsetPercent: totalLength / length * 100,
-							length: frameLength,
-							lengthPercent: frameLength / length * 100,
-							type: frame.type
-						};
-						frames.push(newFrame);
-						prevFrame = newFrame;
-					}
-					second = frame.end;
-					totalLength += frameLength;
-				}
-				time = time.startOf("day").add(1, "days");
-			}
-			var hoursBreaks = [];
-			var offset = secondsToNextHour;
-			while (offset < length) {
-				hoursBreaks.push({
-					offset: offset,
-					offsetPercent: offset / length * 100
-				});
-				offset += SECONDS_IN_HOUR;
-			}
-			return {
-				frames: frames,
-				hoursBreaks: hoursBreaks
-			};
-		}
+		exchange: function(spec) {
+			return new Exchange(spec);
+		},
+		timeline: calculateTimeline
 	}
 });
