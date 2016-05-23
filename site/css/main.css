@@ -27,7 +27,7 @@
     margin-top: 10px;
     text-align: center;
     font-size: 24px;
-    font-family: Courier New, Menlo, monospace;
+    font-family: "Lucida Console", Monaco, monospace;
 }
 
 .current-time-marker-top {
@@ -61,7 +61,7 @@
 
 .exchange-time {
     padding-top: 10px;
-    font-family: Courier New, Menlo, monospace;
+    font-family: "Lucida Console", Monaco, monospace;
     text-align: right;
 }
 
