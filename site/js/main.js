@@ -3,11 +3,27 @@ var module = angular.module("TradingHours", ["DataEngine"]);
 module.controller("ExchangeListController", [
                   "$scope", "$interval", "$data_engine",
                   function($scope, $interval, $engine) {
+    var getBoolSetting = function(name, defaultValue) {
+		var val = localStorage.getItem(name);
+		if (val == null) {
+			return defaultValue;
+		}
+		return val == "true";
+    }
+
+    $scope.utcClocks = getBoolSetting("utcClocks", true); // otherwise user-local
+
 	var renderCurrentTime = function() {
-		$scope.now = moment.utc();
+		$scope.now = $scope.utcClocks ? moment.utc() : moment();
 		$scope.now_hm = $scope.now.format("HH:mm");
 		$scope.now_s = $scope.now.format("ss");
 	}
+
+	$scope.switchUtcClocks = function() {
+		$scope.utcClocks = !$scope.utcClocks;
+		renderCurrentTime();
+		localStorage.setItem("utcClocks", String($scope.utcClocks));
+	};
 
 	renderCurrentTime();
 	$interval(renderCurrentTime, 1000);

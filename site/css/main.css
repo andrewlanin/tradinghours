@@ -1,3 +1,12 @@
+.bottom-dash,
+.bottom-dash:link,
+.bottom-dash:hover,
+.bottom-dash:visited,
+.bottom-dash:active {
+  text-decoration: none !important;
+  border-bottom: 1px dashed;
+}
+
 .layers-container {
     position: relative;
 }
@@ -12,7 +21,7 @@
 
 .current-time {
     border-bottom: 2px solid black;
-    width: 50%;
+    width: 70%;
     height: 40px;
     margin-left: 30px;
     margin-top: 10px;
