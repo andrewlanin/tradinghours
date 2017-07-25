@@ -215,6 +215,182 @@ function exchanges() {
 					"end": "17:45"
 				}
 			]
+		},
+		{
+			"name": "London Stock Exchange (LSE)",
+			"timezone": "Europe/London",
+			"link": "https://www.stockmarketclock.com/exchanges/lse/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "8:00",
+					"end": "16:30"
+				}
+			]
+		},
+		{
+			"name": "Tokyo Stock Exchange (TSE)",
+			"timezone": "Asia/Tokyo",
+			"link": "https://www.stockmarketclock.com/exchanges/jpx/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:00",
+					"end": "11:30"
+				},
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "12:30",
+					"end": "15:00"
+				}
+			]
+		},
+		{
+			"name": "Toronto Stock Exchange (TSX)",
+			"timezone": "America/Toronto",
+			"link": "https://www.stockmarketclock.com/exchanges/tsx/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:30",
+					"end": "16:00"
+				}
+			]
+		},
+		{
+			"name": "Australia Stock Exchange (ASX)",
+			"timezone": "Australia/Sydney",
+			"link": "https://www.stockmarketclock.com/exchanges/asx/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "10:00",
+					"end": "16:00"
+				}
+			]
+		},
+		{
+			"name": "Spanish Stock Exchange (BME)",
+			"timezone": "Europe/Madrid",
+			"link": "https://www.stockmarketclock.com/exchanges/bme/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:00",
+					"end": "17:30"
+				}
+			]
+		},
+		{
+			"name": "India National Stock Exchange (NSE)",
+			"timezone": "Asia/Calcutta",
+			"link": "https://www.stockmarketclock.com/exchanges/nse-india/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:15",
+					"end": "15:30"
+				}
+			]
+		},
+		{
+			"name": "Istanbul Stock Exchange (BIST)",
+			"timezone": "Europe/Istanbul",
+			"link": "https://www.stockmarketclock.com/exchanges/bist/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:30",
+					"end": "12:30"
+				},
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "14:00",
+					"end": "17:30"
+				}
+			]
+		},
+		{
+			"name": "Swiss Stock Exchange (SIX)",
+			"timezone": "Europe/Zurich",
+			"link": "https://www.stockmarketclock.com/exchanges/six/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:00",
+					"end": "17:30"
+				}
+			]
+		},
+		{
+			"name": "German Stock Exchange (FSX)",
+			"timezone": "Europe/Berlin",
+			"link": "https://www.stockmarketclock.com/exchanges/fsx/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "8:00",
+					"end": "20:00"
+				}
+			]
+		},
+
+
+		{
+			"name": "Milan Stock Exchange (MTA)",
+			"timezone": "Europe/Rome",
+			"link": "https://www.stockmarketclock.com/exchanges/mta/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:00",
+					"end": "17:30"
+				}
+			]
+		},
+		{
+			"name": "Hong Kong Stock Exchange (HKEX)",
+			"timezone": "Asia/Hong_Kong",
+			"link": "https://www.stockmarketclock.com/exchanges/hkex/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:30",
+					"end": "12:00"
+				},
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "13:00",
+					"end": "16:00"
+				}
+			]
+		},
+		{
+			"name": "Singapore Exchange (SGX)",
+			"timezone": "Asia/Singapore",
+			"link": "https://www.stockmarketclock.com/exchanges/sgx/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:00",
+					"end": "17:00"
+				}
+			]
 		}
 	]
 }
