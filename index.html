@@ -33,14 +33,17 @@
         <div class="col-xs-6">
           <span class="exchange-name">{{exchange.spec.name}}</span>
           <a target="_blank" href="{{exchange.spec.link}}"><span class="glyphicon glyphicon-new-window"></span></a>
-          <span ng-switch on="exchange.tradingState" title="{{exchange.spec.timezone}}&emsp;{{exchange.sessionString}}">
-            <span ng-switch-when="out" class="text-muted">&#9679;&nbsp;Closed</span>
-            <span ng-switch-when="regular" class="text-success">&#9679;&nbsp;Open</span>
-            <span ng-switch-when="premarket" class="text-warning">&#9679;&nbsp;Pre-Market</span>
-            <span ng-switch-when="postmarket" class="text-warning">&#9679;&nbsp;Post-Market</span>
+          
+        </div>
+        <div class="col-xs-2 exchange-time" title="{{exchange.spec.timezone}}&emsp;{{exchange.sessionString}}">
+          {{formatExchangeTime(exchange)}}&emsp;
+          <span ng-switch on="exchange.tradingState">
+            <span ng-switch-when="out" class="text-muted">Closed</span>
+            <span ng-switch-when="regular" class="text-success">Open</span>
+            <span ng-switch-when="premarket" class="text-warning">Premarket</span>
+            <span ng-switch-when="postmarket" class="text-warning">Postmarket</span>
           </span>
         </div>
-        <div class="col-xs-2 exchange-time">{{formatExchangeTime(exchange)}}</div>
         <div class="col-xs-4">
           <div class="layers-container">
             <svg class="layer timeline" width="100%" height="20px">

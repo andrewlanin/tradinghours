@@ -57,13 +57,28 @@
      background-color: #EEE; 
 }
 
+.row .col-xs-1,
+.row .col-xs-2,
+.row .col-xs-3,
+.row .col-xs-4,
+.row .col-xs-5,
+.row .col-xs-6,
+.row .col-xs-7,
+.row .col-xs-8,
+.row .col-xs-9,
+.row .col-xs-10,
+.row .col-xs-11,
+.row .col-xs-12
+{
+    padding: 0 5px 0 5px;
+}
+
 .exchange-name {
     font-size: 16px;
 }
 
 .exchange-time {
     font-family: "Lucida Console", Monaco, monospace;
-    text-align: right;
 }
 
 .timeline {
