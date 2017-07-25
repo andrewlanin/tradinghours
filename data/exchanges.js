@@ -415,6 +415,19 @@ function exchanges() {
 					"end": "17:30"
 				}
 			]
+		},
+		{
+			"name": "Argentinian Stock Exchange (BCBA)",
+			"timezone": "America/Argentina/Buenos_Aires",
+			"link": "https://www.stockmarketclock.com/exchanges/bcba/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "11:00",
+					"end": "17:00"
+				}
+			]
 		}
 	]
 }
