@@ -204,7 +204,7 @@ function exchanges() {
 			]
 		},
 		{
-			"name": "BM&F Bovespa Derivatives, Index futures, FX",
+			"name": "BM&F Bovespa Derivatives, Index, Futures, FX",
 			"timezone": "America/Sao_Paulo",
 			"link": "http://www.bmfbovespa.com.br/en_us/services/trading/bm-fbovespapuma-trading-system/for-members-and-traders/trading-hours/derivatives/",
 			"trading_hours": [
@@ -387,6 +387,19 @@ function exchanges() {
 					"type": "regular",
 					"start": "9:00",
 					"end": "17:00"
+				}
+			]
+		},
+		{
+			"name": "Euronext Paris Stock Exchange",
+			"timezone": "Europe/Paris",
+			"link": "https://www.stockmarketclock.com/exchanges/euronext-paris/trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:00",
+					"end": "17:30"
 				}
 			]
 		}
