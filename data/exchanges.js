@@ -402,6 +402,19 @@ function exchanges() {
 					"end": "17:30"
 				}
 			]
+		},
+		{
+			"name": "Xetra",
+			"timezone": "Europe/Berlin",
+			"link": "http://www.xetra.com/xetra-en/trading/trading-calendar-and-trading-hours",
+			"trading_hours": [
+				{
+					"days": "Mon-Fri",
+					"type": "regular",
+					"start": "9:00",
+					"end": "17:30"
+				}
+			]
 		}
 	]
 }
