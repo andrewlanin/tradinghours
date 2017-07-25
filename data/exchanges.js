@@ -345,8 +345,6 @@ function exchanges() {
 				}
 			]
 		},
-
-
 		{
 			"name": "Milan Stock Exchange (MTA)",
 			"timezone": "Europe/Rome",

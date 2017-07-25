@@ -40,33 +40,33 @@
 .current-time-marker {
     position: absolute;
     top: -10px;
-    height: 80px;
+    height: 60px;
     width: 30%;
     border-right: 2px solid black;
     z-index: 100;
 }
 
 .exchange-row {
-    margin-bottom: 15px;
+     margin-top: 0;
+     margin-bottom: 0;
+     padding-top: 3px;
+     padding-bottom: 3px;
+}
+
+.exchange-row:hover {
+     background-color: #EEE; 
 }
 
 .exchange-name {
     font-size: 16px;
-    font-weight: bold;
-}
-
-.exchange-second-line {
-    margin-bottom: 0;
 }
 
 .exchange-time {
-    padding-top: 10px;
     font-family: "Lucida Console", Monaco, monospace;
     text-align: right;
 }
 
 .timeline {
-    margin-top: 10px;
 }
 
 .timeline-frame-out {

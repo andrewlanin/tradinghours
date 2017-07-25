@@ -11,7 +11,7 @@ module.controller("ExchangeListController", [
 		return val == "true";
     }
 
-    $scope.utcClocks = getBoolSetting("utcClocks", true); // otherwise user-local
+	$scope.utcClocks = getBoolSetting("utcClocks", true); // otherwise user-local
 
 	var renderCurrentTime = function() {
 		$scope.now = $scope.utcClocks ? moment.utc() : moment();
