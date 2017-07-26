@@ -11,7 +11,9 @@ module.controller("ExchangeListController", [
 		return val == "true";
     }
 
-	$scope.utcClocks = getBoolSetting("utcClocks", true); // otherwise user-local
+	//
+	// Current time
+	//
 
 	var renderCurrentTime = function() {
 		$scope.now = $scope.utcClocks ? moment.utc() : moment();
@@ -19,18 +21,36 @@ module.controller("ExchangeListController", [
 		$scope.now_s = $scope.now.format("ss");
 	}
 
+	renderCurrentTime();
+	$interval(renderCurrentTime, 1000);
+
+	//
+	// UTC / local switch
+	//
+
+	$scope.utcClocks = getBoolSetting("utcClocks", true); // otherwise user-local
+
 	$scope.switchUtcClocks = function() {
 		$scope.utcClocks = !$scope.utcClocks;
 		renderCurrentTime();
 		localStorage.setItem("utcClocks", String($scope.utcClocks));
 	};
 
-	renderCurrentTime();
-	$interval(renderCurrentTime, 1000);
+	//
+	// Exchanges
+	//	
 
-	$scope.exchanges = _.sortBy(_.map(exchanges(), function(exchangeSpec){
-		return $engine.exchange(exchangeSpec);
-	}), function(e) {return e.spec.name});
+	var exchangesObjects = exchanges().map(function(spec) {
+		return $engine.exchange(spec);
+	})
+
+	$scope.exchanges = _.sortBy(exchangesObjects, function(exchange) {
+		return exchange.spec.name
+	});
+
+	//
+	// Trading state
+	//
 
 	var updateCurrentTradingStates = function() {
 		_.each($scope.exchanges, function(exchange){
@@ -39,7 +59,11 @@ module.controller("ExchangeListController", [
 	}
 
 	updateCurrentTradingStates();
-	$interval(updateCurrentTradingStates, 60000);
+	$interval(updateCurrentTradingStates, 10000);
+
+	//
+	// Trading timelines
+	//
 
 	var calculateTimelines = function() {
 		_.each($scope.exchanges, function(exchange){
@@ -49,6 +73,10 @@ module.controller("ExchangeListController", [
 
 	calculateTimelines();
 	$interval(calculateTimelines, 60000);
+
+	//
+	// Exchange time
+	//
 
 	$scope.formatExchangeTime = function(exchange) {
 		return exchange.localTime($scope.now).format("ddd, HH:mm");
